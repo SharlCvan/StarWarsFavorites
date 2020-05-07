@@ -192,6 +192,10 @@ header {
     background-color: darkgrey;
 }
 
+.li-uncklicked {
+    background-color: grey;
+}
+
 .li-clicked {
     background-color: darkgrey;
 }

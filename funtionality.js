@@ -1,17 +1,34 @@
-/*Under övningstiden ska ni skriva en webbapp som skickar ett request till
-http://forverkliga.se/JavaScript/api/simple.php
-När ni lyckats med det, skicka ?key=value med querystring. 
-Då ska API:et returnera ett JavaScript-objekt som innehåller ett 
-klockslag. (servern går tyvärr två timmar efter) Gör en knapp på 
-webbsidan som hämtar aktuell tid varje gång man klickar på den, och 
-visar för användaren.
 
-Om ni hinner: skicka ?world med querystring. 
-API:et returnerar en lista med data. Gör så att webbappen visar datan 
-i läsbart format för användaren. (Ni kommer bli tvungna att skapa nya 
-    HTML-element.)*/
+    
+    //_____Declare list with favorites____
+
+    var favoriteChars = [];
+
+    var allChars = [];
 
 
+     //Swapi code
+     async function fillChars() {
+        const url = 'https://swapi.dev/api/people/';
+
+        const response = await fetch(url);
+        const charracterData = await response.json();
+
+        console.log('()',charracterData.results);
+
+        for(let i of charracterData.results) {
+            let charracter = await charMaker(i);
+            charracter.addEventListener('click', (event) => {
+                liClick(event.target)
+            });
+            allChars.push(charracter);
+
+        }
+    }
+
+    fillChars();
+        //Swapi code
+    
     /*____Jedi and Sith link JS____*/
 
     /*Find the list and buttons to display and the link to be clicked*/
@@ -26,8 +43,19 @@ i läsbart format för användaren. (Ni kommer bli tvungna att skapa nya
     
     //View user list if jedi icon is clicked
     jediIcon[0].addEventListener('click', () => {
+
         charracterList.classList = 'list-visible';
         buttonPanel.classList = 'button-panel';
+
+        let listOfCharracters = document.querySelector('.list-visible ul');
+
+        while(listOfCharracters.hasChildNodes()) {
+            listOfCharracters.removeChild(listOfCharracters.lastChild);
+        }
+
+        for(let i of favoriteChars) {
+            listOfCharracters.appendChild(i);
+        }
 
         addButton.style.cssText = 'display: none;';
         editButton.style.cssText = 'display: inline-block; width: 198px;'
@@ -35,14 +63,27 @@ i läsbart format för användaren. (Ni kommer bli tvungna att skapa nya
     });
 
     //View list with all chars if sith icon is clicked
-    jediIcon[1].addEventListener('click', () => {
+    jediIcon[1].addEventListener('click', async () => {
+
         charracterList.classList = 'list-visible';
         buttonPanel.classList = 'button-panel';
 
         addButton.style.cssText = 'display: inline-block; width: 400px;';
         editButton.style.cssText = 'display: none;'
         removeButton.style.cssText = 'display: none;';
+
+        let listOfCharracters = document.querySelector('.list-visible ul');
+
+        while(listOfCharracters.hasChildNodes()) {
+            listOfCharracters.removeChild(listOfCharracters.lastChild);
+        }
+
+        for(let i of allChars) {
+            listOfCharracters.appendChild(i);
+        }
+
     });
+
 
 
     /*____Star Wars link JS____*/
@@ -55,21 +96,66 @@ i läsbart format för användaren. (Ni kommer bli tvungna att skapa nya
     });
 
 
-    //____List members click event_____
 
-    let listLi = document.querySelectorAll('.list-visible li');
+    //_____function mapping planet to charracter_____
 
-    for(let i = 0; i < listLi.length; i++) {
+    async function charMaker(charracter) {
+        let li = document.createElement('li');
 
-        listLi[i].addEventListener('click', (event) => {
+        console.log(charracter.homeworld);
 
-            // for(let j = 0; j < listLi.length; j++) {
-            //     if(listLi[i].classList.contains('li-clicked')) {
-            //         listLi[i].classList.remove('li-clicked');
-            //     }
-            // }
-            listLi[i].classList.toggle('li-clicked');
-        })
+        const url = `${charracter.homeworld}`;
+        const response = await fetch(url);
+        const planetData = await response.json();
+
+        console.log(planetData.name);
+
+        let char = {
+            name: charracter.name,
+            planet: planetData.name
+        }
+
+        li.innerText = `${char.name}, ${char.planet}`;
+        return li;
     }
 
 
+    //____List members click event_____
+ 
+    
+    function liClick (clickedLi) {
+
+        let listLi = document.querySelectorAll('.list-visible > ul li');
+    
+        for(let j = 0; j < listLi.length; j++) {
+            if(listLi[j].classList.contains('li-clicked')) {
+                listLi[j].classList.toggle('li-clicked');
+            }
+        }      
+        clickedLi.classList.toggle('li-clicked');      
+    }  
+
+     
+   //___add char to favorites event____
+
+   addButton.addEventListener('click', () => {
+
+       for(let i of allChars) {
+           if(i.classList.contains('li-clicked')) {
+               favoriteChars.push(i);
+           }
+       }
+
+   })
+
+   //___Remove Char from favorites event____
+
+   removeButton.addEventListener('click', () => {
+    for(let i of favoriteChars) {
+        if(i.classList.contains('li-clicked')) {
+            favoriteChars.pop(i);
+        }
+    }
+   })
+
+   //___Edit chars event______

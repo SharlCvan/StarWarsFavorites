@@ -143,7 +143,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 50px;
+    padding-top: 80px;
    
 }
 
@@ -205,10 +205,10 @@ header {
 .button-panel {
     position: relative;
     z-index: 200;
-    width: 400px;
+    width: 420px;
     height: 40px;
     text-align: center;
-    margin-top: -250px;
+    margin-top: -230px;
     background-color: grey;
     border-radius: 5px;
     opacity: 1;
@@ -228,7 +228,7 @@ header {
 }
 
 .button-panel > button {
-    width: 130px;
+    width: 150px;
     height: 40px;
     color: rgba(255, 228, 0, 1);
     background-color: grey;
@@ -243,7 +243,41 @@ header {
     background-color: darkgrey;
 }
 
+/*Edit input section*/
 
+.input-area {
+    position: relative;
+    margin-top: -300px;
+    display: none;
+    margin-top: -300px;
+    margin-bottom: 10px;
+}
+
+.input-area-visible {
+    position: relative;
+    margin-top: -300px;
+    display: inline-block;
+    margin-top: -300px;
+    margin-bottom: 10px;
+}
+
+.input-name {
+    height: 30px;
+    width: 205px;    
+    border-radius: 5px;
+    background-color: darkgrey;
+    font-family: 'Bebas Neue';
+    font-size: 1.2rem;
+}
+
+.input-planet {
+    height: 30px;
+    width: 205px;
+    border-radius: 5px;
+    background-color: darkgrey;
+    font-family: 'Bebas Neue';
+    font-size: 1.2rem;
+}
 
 /*Star wars text section*/
 

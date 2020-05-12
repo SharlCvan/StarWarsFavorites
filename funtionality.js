@@ -1,22 +1,28 @@
-
+   //____________Load charracters on page load______
     window.addEventListener('load', () => 
     {
         fillChars();
+        let view = document.querySelector('#backstory');
+        view.scrollIntoView({behavior: "smooth"});
     })
 
 
-    //_____Declare list with favorites____
+    //_____Declare all lists, buttons and links on the page____
 
     var favoriteChars = [];
+    var allChars = [];    
 
-    var allChars = [];
+    let charracterList = document.querySelector('.list');
+    let buttonPanel = document.querySelector('.button-panel');
+    let addButton = document.querySelector('.add-button');
+    let removeButton = document.querySelector('.remove-button');
+    let editButton = document.querySelector('.edit-button');
+    let insetButton = document.querySelector('.insert-button');
+   
+    let jediIcon = document.querySelectorAll('a[href="#list-section"]');
 
-    //Scroll to star wars text 
+     //____________Get charracters from SWAPI function__________
 
-    let view = document.querySelector('#backstory');
-    view.scrollIntoView({behavior: "smooth"});
-
-     //Swapi code
      async function fillChars() {
 
         for(let i = 1; i < 10; i++) {
@@ -39,44 +45,36 @@
         sithText.innerHTML = "<h2>ALL CHARRACTERS</h2>";
     }
 
-    //fillChars();
-        //Swapi code
-    
-    /*____Jedi and Sith link JS____*/
+     //_____function mapping planet to charracter_____
 
-    /*Find the list and buttons to display and the link to be clicked*/
-    let charracterList = document.querySelector('.list');
+     async function charMaker(charracter) {
+        let li = document.createElement('li');
 
-    let buttonPanel = document.querySelector('.button-panel');
-    let addButton = document.querySelector('.add-button');
-    let removeButton = document.querySelector('.remove-button');
-    let editButton = document.querySelector('.edit-button');
-    let insetButton = document.querySelector('.insert-button');
+        console.log(charracter.homeworld);
 
-    let jediIcon = document.querySelectorAll('a[href="#list-section"]');
-    
-    //View user list if jedi icon is clicked
+        const url = `${charracter.homeworld}`;
+        const response = await fetch(url);
+        const planetData = await response.json();
+
+        console.log(planetData.name);
+
+        let char = {
+            name: charracter.name,
+            planet: planetData.name
+        }
+
+        li.innerText = `${char.name}, ${char.planet}`;
+        return li;
+    }
+
+    //______________Jedi icon click event_________________
+
     jediIcon[0].addEventListener('click', () => {
 
         charracterList.classList = 'list-visible';
         buttonPanel.classList = 'button-panel';
 
-        let listOfCharracters = document.querySelector('.list-visible ul');
-
-        while(listOfCharracters.hasChildNodes()) {
-            listOfCharracters.removeChild(listOfCharracters.lastChild);
-        }
-
-        for(let i of favoriteChars) {
-            listOfCharracters.appendChild(i);
-        }
-
-        for(let i of allChars) {
-            if(i.classList.contains('li-clicked')) {
-                i.classList.toggle('li-clicked');
-            }
-
-        }
+        UpdateList();
 
         addButton.style.cssText = 'display: none;';
         editButton.style.cssText = 'display: inline-block; width: 120px;'
@@ -84,7 +82,8 @@
         insetButton.style.cssText = 'display: inline-block; width: 120px;';
     });
 
-    //View list with all chars if sith icon is clicked
+    //_________________Sith icon click event________________________
+
     jediIcon[1].addEventListener('click', async () => {
 
         let sithText = document.querySelector('.nav-sith-text');
@@ -127,9 +126,7 @@
 
     });
 
-
-
-    /*____Star Wars link JS____*/
+    //________________Star Wars headline click event__________
 
     let starWarsIcon = document.querySelector('a[href="#backstory"]');
 
@@ -140,34 +137,8 @@
         inputArea.classList = 'input-area';
     });
 
-
-
-    //_____function mapping planet to charracter_____
-
-    async function charMaker(charracter) {
-        let li = document.createElement('li');
-
-        console.log(charracter.homeworld);
-
-        const url = `${charracter.homeworld}`;
-        const response = await fetch(url);
-        const planetData = await response.json();
-
-        console.log(planetData.name);
-
-        let char = {
-            name: charracter.name,
-            planet: planetData.name
-        }
-
-        li.innerText = `${char.name}, ${char.planet}`;
-        return li;
-    }
-
-
     //____List members click event_____
  
-    
     function liClick (clickedLi) {
 
         let listLi = document.querySelectorAll('.list-visible > ul li');
@@ -201,17 +172,15 @@
 
    })
 
-   //___Remove Char from favorites event____
+   //_____________Remove Char from favorites event_________
 
    removeButton.addEventListener('click', () => {
-       //Hides edit input fields
     let inputArea = document.querySelector('.input-area');
     inputArea.classList.remove('input-area-visible');
 
     let insertArea = document.querySelector('.input-area');
     insertArea.classList.remove('insert-area-visible');
 
-    //
     for(let i = 0; i < favoriteChars.length; i++) {        
         if(favoriteChars[i].classList.contains('li-clicked')) {
             favoriteChars.splice(i, 1);
@@ -229,7 +198,7 @@
     }
    })
 
-   //___Edit chars button event______
+   //___________________Edit chars button event_______________________
    editButton.addEventListener('click', () => {
        let inputArea = document.querySelector('.input-area');
        inputArea.classList.toggle('input-area-visible');
@@ -239,15 +208,12 @@
        
    })
 
-  //___Edit chars input event____
+  //_____________________Edit chars input event_______________________
+
    let editName = document.querySelector('.input-name');
    let editPlanet = document.querySelector('.input-planet');
 
    let inputArea = document.querySelector('.input-area');
-
-//    inputName.addEventListener('keypress', (event) => {
-
-//    })
  
    editPlanet.addEventListener('keyup', (e) => {
 
@@ -281,8 +247,7 @@
    })
 
 
-
-//___Insert own charracter event____
+//_______________Insert button event_____________________
 
 insetButton.addEventListener('click', () => {
     let insertArea = document.querySelector('.input-area');
@@ -291,6 +256,8 @@ insetButton.addEventListener('click', () => {
     let inputArea = document.querySelector('.input-area');
     inputArea.classList.remove('input-area-visible');
 })
+
+//______________________Insert own charracter input event__________________
 
 let insertName = document.querySelector('.input-name');
 let insertPlanet = document.querySelector('.input-planet');
@@ -331,7 +298,13 @@ insertPlanet.addEventListener('keyup', (e) => {
 
  }
 
- let listOfCharracters = document.querySelector('.list-visible ul');
+ UpdateList();
+
+})
+
+
+function UpdateList() {
+    let listOfCharracters = document.querySelector('.list-visible ul');
 
         while(listOfCharracters.hasChildNodes()) {
             listOfCharracters.removeChild(listOfCharracters.lastChild);
@@ -347,5 +320,4 @@ insertPlanet.addEventListener('keyup', (e) => {
             }
 
         }
-
-})
+}

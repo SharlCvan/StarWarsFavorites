@@ -135,7 +135,7 @@ header {
 
 /*Section with the lists*/
 
-.intro-section {
+/* .intro-section {
     min-height: 850px;
     width: 100%;
     height: 100%;
@@ -144,15 +144,34 @@ header {
     align-items: center;
     justify-content: center;
     padding-top: 80px;
-   
+   border-style: dashed;
+} */
+
+.intro-section {
+    min-height: 850px;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    display: grid;
+    grid-template-rows: 120px 600px 40px 40px;
+}
+
+.list-background {
+    grid-row: 2;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
 }
 
 .list-visible {
     position: relative;
+    background-color: grey;
     min-width: 400px;
+    max-width: 400px;
     min-height: 600px;
     max-height: 600px;
-    background-color: grey; 
     border-radius: 5px; 
     overflow-x: hidden;
     font-family: 'Bebas Neue';
@@ -161,13 +180,15 @@ header {
     opacity: 1;
     transition-duration: 1.5s;
     margin: 0;
+    text-align: center;
 }
 
 .list {
+    background-color: grey;
     min-width: 400px;
+    max-width: 400px;
     min-height: 600px;
     max-height: 600px;
-    background-color: grey; 
     border-radius: 5px; 
     overflow-x: hidden;
     font-family: 'Bebas Neue';
@@ -175,6 +196,7 @@ header {
     color: rgba(255, 228, 0, 1);
     transition-duration: 1.5s; 
     opacity: 0;
+    text-align: center;
 }
 
 .list-visible > ul {
@@ -185,6 +207,7 @@ header {
 .list > ul {
     list-style: none;
     padding-left: 0;
+    background-color: grey; 
 }
 
 .list-visible > ul li:hover {
@@ -203,26 +226,24 @@ header {
 /*Button panel section*/
 
 .button-panel {
+    grid-row: 3;
     position: relative;
     z-index: 200;
-    width: 420px;
+    width: 100%;
     height: 40px;
     text-align: center;
-    margin-top: -230px;
-    background-color: grey;
     border-radius: 5px;
     opacity: 1;
     transition-duration: 1.5s; 
 }
 
 .button-panel-hidden {
+    grid-row: 3;
     position: relative;
     z-index: 200;
-    width: 400px;
+    width: 100%;
     height: 40px;
     text-align: center;
-    margin-top: -250px;
-    background-color: grey;
     border-radius: 5px;
     opacity: 0;
 }
@@ -246,56 +267,49 @@ header {
 /*Edit input section*/
 
 .input-area {
+    grid-row: 4;
     position: relative;
-    margin-top: -300px;
     display: none;
-    margin-top: -300px;
-    margin-bottom: 10px;
+    text-align: center;
 }
 
 .insert-area {
+    grid-row: 4;
     position: relative;
-    margin-top: -300px;
     display: none;
-    margin-top: -300px;
-    margin-bottom: 10px;
+    text-align: center;
 }
 
 .search-area {
+    grid-row: 4;
     position: relative;
-    margin-top: -300px;
     display: none;
-    margin-top: -300px;
-    margin-bottom: 10px;
+    text-align: center;
 }
 
 .input-area-visible {
+    grid-row: 4;
     position: relative;
-    margin-top: -300px;
     display: inline-block;
-    margin-top: -300px;
-    margin-bottom: 10px;
 }
 
 .insert-area-visible {
-    position: relative;
-    margin-top: -300px;
+    grid-row: 4;
+    position: relative;    
     display: inline-block;
-    margin-top: -300px;
-    margin-bottom: 10px;
+    text-align: center;
 }
 
 .search-area-visible {
+    grid-row: 4;
     position: relative;
-    margin-top: -300px;
     display: inline-block;
-    margin-top: -300px;
-    margin-bottom: 10px;
+    text-align: center;
 }
 
 .input-name {
     height: 30px;
-    width: 205px;    
+    width: 195px;    
     border-radius: 5px;
     background-color: darkgrey;
     font-family: 'Bebas Neue';
@@ -304,7 +318,7 @@ header {
 
 .input-planet {
     height: 30px;
-    width: 205px;
+    width: 195px;
     border-radius: 5px;
     background-color: darkgrey;
     font-family: 'Bebas Neue';

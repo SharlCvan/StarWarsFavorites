@@ -79,9 +79,9 @@
 
         addButton.style.cssText = 'display: none;';
         searchButton.style.cssText ='display: none;';
-        editButton.style.cssText = 'display: inline-block; width: 120px;'
-        removeButton.style.cssText = 'display: inline-block; width: 120px;';
-        insetButton.style.cssText = 'display: inline-block; width: 120px;';
+        editButton.style.cssText = 'display: inline-block; width: 131px;'
+        removeButton.style.cssText = 'display: inline-block; width: 131px;';
+        insetButton.style.cssText = 'display: inline-block; width: 131px;';
         let searchArea = document.querySelector('.search-area');
         searchArea.classList.remove('search-area-visible');
     });
@@ -102,8 +102,8 @@
         charracterList.classList = 'list-visible';
         buttonPanel.classList = 'button-panel';
 
-        addButton.style.cssText = 'display: inline-block; width: 199px;';
-        searchButton.style.cssText = 'display: inline-block; width: 199px;';
+        addButton.style.cssText = 'display: inline-block; width: 198px;';
+        searchButton.style.cssText = 'display: inline-block; width: 198px;';
         editButton.style.cssText = 'display: none;'
         removeButton.style.cssText = 'display: none;';
         insetButton.style.cssText = 'display: none;';
@@ -111,22 +111,10 @@
         let inputArea = document.querySelector('.input-area');
         inputArea.classList.remove('input-area-visible');
 
+        let insertArea = document.querySelector('.input-area');
+        insertArea.classList.remove('insert-area-visible');
+
         let listOfCharracters = document.querySelector('.list-visible ul');
-
-        // while(listOfCharracters.hasChildNodes()) {
-        //     listOfCharracters.removeChild(listOfCharracters.lastChild);
-        // }
-
-        // for(let i of allChars) {
-        //     listOfCharracters.appendChild(i);
-        // }
-
-        // for(let i of favoriteChars) {
-        //     if(i.classList.contains('li-clicked')) {
-        //         i.classList.toggle('li-clicked');
-        //     }
-
-        // }
 
         updateSwapiCharList();
     }
@@ -298,7 +286,7 @@ insertPlanet.addEventListener('keyup', (e) => {
      favoriteChars.push(insertChar);
 
     let insertArea = document.querySelector('.insert-area');
-    insertArea.classList.toggle('insert-area-visible');
+    insertArea.classList.add('insert-area-visible');
 
     insertName.value = '';
     insertPlanet.value = '';

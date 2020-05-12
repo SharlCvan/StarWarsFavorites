@@ -253,7 +253,23 @@ header {
     margin-bottom: 10px;
 }
 
+.insert-area {
+    position: relative;
+    margin-top: -300px;
+    display: none;
+    margin-top: -300px;
+    margin-bottom: 10px;
+}
+
 .input-area-visible {
+    position: relative;
+    margin-top: -300px;
+    display: inline-block;
+    margin-top: -300px;
+    margin-bottom: 10px;
+}
+
+.insert-area-visible {
     position: relative;
     margin-top: -300px;
     display: inline-block;

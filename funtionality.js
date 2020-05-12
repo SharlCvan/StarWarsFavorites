@@ -1,5 +1,10 @@
 
-    
+    window.addEventListener('load', () => 
+    {
+        fillChars();
+    })
+
+
     //_____Declare list with favorites____
 
     var favoriteChars = [];
@@ -34,7 +39,7 @@
         sithText.innerHTML = "<h2>ALL CHARRACTERS</h2>";
     }
 
-    fillChars();
+    //fillChars();
         //Swapi code
     
     /*____Jedi and Sith link JS____*/
@@ -46,6 +51,7 @@
     let addButton = document.querySelector('.add-button');
     let removeButton = document.querySelector('.remove-button');
     let editButton = document.querySelector('.edit-button');
+    let insetButton = document.querySelector('.insert-button');
 
     let jediIcon = document.querySelectorAll('a[href="#list-section"]');
     
@@ -73,8 +79,9 @@
         }
 
         addButton.style.cssText = 'display: none;';
-        editButton.style.cssText = 'display: inline-block; width: 198px;'
-        removeButton.style.cssText = 'display: inline-block; width: 198px;';
+        editButton.style.cssText = 'display: inline-block; width: 120px;'
+        removeButton.style.cssText = 'display: inline-block; width: 120px;';
+        insetButton.style.cssText = 'display: inline-block; width: 120px;';
     });
 
     //View list with all chars if sith icon is clicked
@@ -95,6 +102,7 @@
         addButton.style.cssText = 'display: inline-block; width: 400px;';
         editButton.style.cssText = 'display: none;'
         removeButton.style.cssText = 'display: none;';
+        insetButton.style.cssText = 'display: none;';
 
         let inputArea = document.querySelector('.input-area');
         inputArea.classList.remove('input-area-visible');
@@ -200,6 +208,9 @@
     let inputArea = document.querySelector('.input-area');
     inputArea.classList.remove('input-area-visible');
 
+    let insertArea = document.querySelector('.input-area');
+    insertArea.classList.remove('insert-area-visible');
+
     //
     for(let i = 0; i < favoriteChars.length; i++) {        
         if(favoriteChars[i].classList.contains('li-clicked')) {
@@ -222,20 +233,23 @@
    editButton.addEventListener('click', () => {
        let inputArea = document.querySelector('.input-area');
        inputArea.classList.toggle('input-area-visible');
+
+       let insertArea = document.querySelector('.input-area');
+       insertArea.classList.remove('insert-area-visible');
+       
    })
 
   //___Edit chars input event____
-   let inputName = document.querySelector('.input-name');
-   let inputPlanet = document.querySelector('.input-planet');
+   let editName = document.querySelector('.input-name');
+   let editPlanet = document.querySelector('.input-planet');
 
    let inputArea = document.querySelector('.input-area');
 
 //    inputName.addEventListener('keypress', (event) => {
 
 //    })
-
-   //__________________________Test1____________________
-   inputPlanet.addEventListener('keyup', (e) => {
+ 
+   editPlanet.addEventListener('keyup', (e) => {
 
     console.log('key was pressed');
 
@@ -244,7 +258,7 @@
     console.log(e.target.value);
     console.log(nameInput.value);
 
-    if(e.keyCode === 13 && e.target.value && nameInput.value) {
+    if(e.keyCode === 13 && e.target.value && nameInput.value && inputArea.classList.contains('input-area-visible')) {
 
         console.log('enter was pressed');
 
@@ -256,11 +270,82 @@
             }
         }
 
+        editPlanet.value = '';
+        editName.value = '';
+
+        let insertArea = document.querySelector('.input-area');
+        insertArea.classList.toggle('input-area-visible');
+
     }
 
    })
 
 
 
-//Fyll i båda fälten och när enter trycks så ändras elementet, är något fält tomt
-//så händer inget, trycks inte enter in så händer inget heller
+//___Insert own charracter event____
+
+insetButton.addEventListener('click', () => {
+    let insertArea = document.querySelector('.input-area');
+    insertArea.classList.toggle('insert-area-visible');
+
+    let inputArea = document.querySelector('.input-area');
+    inputArea.classList.remove('input-area-visible');
+})
+
+let insertName = document.querySelector('.input-name');
+let insertPlanet = document.querySelector('.input-planet');
+
+let insertArea = document.querySelector('.input-area');
+
+insertPlanet.addEventListener('keyup', (e) => {
+
+ console.log('key was pressed');
+
+ let nameInsert = document.querySelector('.input-name');
+
+ console.log(e.target.value);
+ console.log(nameInsert.value);
+
+ let insertArea = document.querySelector('.input-area');
+
+ if(e.keyCode === 13 && e.target.value && nameInsert.value && insertArea.classList.contains('insert-area-visible')) {
+
+     console.log('enter was pressed');
+
+     let charracters = document.querySelectorAll('.list-visible > ul');
+     
+     let insertChar = document.createElement('li');
+     insertChar.innerText = `${nameInsert.value}, ${e.target.value}`;
+
+     insertChar.addEventListener('click', (event) => {
+        liClick(event.target)
+        });
+
+     favoriteChars.push(insertChar);
+
+    let insertArea = document.querySelector('.insert-area');
+    insertArea.classList.toggle('insert-area-visible');
+
+    insertName.value = '';
+    insertPlanet.value = '';
+
+ }
+
+ let listOfCharracters = document.querySelector('.list-visible ul');
+
+        while(listOfCharracters.hasChildNodes()) {
+            listOfCharracters.removeChild(listOfCharracters.lastChild);
+        }
+
+        for(let i of favoriteChars) {
+            listOfCharracters.appendChild(i);
+        }
+
+        for(let i of allChars) {
+            if(i.classList.contains('li-clicked')) {
+                i.classList.toggle('li-clicked');
+            }
+
+        }
+
+})

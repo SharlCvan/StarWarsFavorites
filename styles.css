@@ -261,6 +261,14 @@ header {
     margin-bottom: 10px;
 }
 
+.search-area {
+    position: relative;
+    margin-top: -300px;
+    display: none;
+    margin-top: -300px;
+    margin-bottom: 10px;
+}
+
 .input-area-visible {
     position: relative;
     margin-top: -300px;
@@ -270,6 +278,14 @@ header {
 }
 
 .insert-area-visible {
+    position: relative;
+    margin-top: -300px;
+    display: inline-block;
+    margin-top: -300px;
+    margin-bottom: 10px;
+}
+
+.search-area-visible {
     position: relative;
     margin-top: -300px;
     display: inline-block;
@@ -294,6 +310,17 @@ header {
     font-family: 'Bebas Neue';
     font-size: 1.2rem;
 }
+
+.input-search {
+    height: 30px;
+    width: 400px;
+    border-radius: 5px;
+    background-color: darkgrey;
+    font-family: 'Bebas Neue';
+    font-size: 1.2rem;
+}
+
+
 
 /*Star wars text section*/
 

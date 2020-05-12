@@ -18,6 +18,7 @@
     let removeButton = document.querySelector('.remove-button');
     let editButton = document.querySelector('.edit-button');
     let insetButton = document.querySelector('.insert-button');
+    let searchButton = document.querySelector('.search-button');
    
     let jediIcon = document.querySelectorAll('a[href="#list-section"]');
 
@@ -77,9 +78,12 @@
         UpdateList();
 
         addButton.style.cssText = 'display: none;';
+        searchButton.style.cssText ='display: none;';
         editButton.style.cssText = 'display: inline-block; width: 120px;'
         removeButton.style.cssText = 'display: inline-block; width: 120px;';
         insetButton.style.cssText = 'display: inline-block; width: 120px;';
+        let searchArea = document.querySelector('.search-area');
+        searchArea.classList.remove('search-area-visible');
     });
 
     //_________________Sith icon click event________________________
@@ -98,7 +102,8 @@
         charracterList.classList = 'list-visible';
         buttonPanel.classList = 'button-panel';
 
-        addButton.style.cssText = 'display: inline-block; width: 400px;';
+        addButton.style.cssText = 'display: inline-block; width: 199px;';
+        searchButton.style.cssText = 'display: inline-block; width: 199px;';
         editButton.style.cssText = 'display: none;'
         removeButton.style.cssText = 'display: none;';
         insetButton.style.cssText = 'display: none;';
@@ -108,20 +113,22 @@
 
         let listOfCharracters = document.querySelector('.list-visible ul');
 
-        while(listOfCharracters.hasChildNodes()) {
-            listOfCharracters.removeChild(listOfCharracters.lastChild);
-        }
+        // while(listOfCharracters.hasChildNodes()) {
+        //     listOfCharracters.removeChild(listOfCharracters.lastChild);
+        // }
 
-        for(let i of allChars) {
-            listOfCharracters.appendChild(i);
-        }
+        // for(let i of allChars) {
+        //     listOfCharracters.appendChild(i);
+        // }
 
-        for(let i of favoriteChars) {
-            if(i.classList.contains('li-clicked')) {
-                i.classList.toggle('li-clicked');
-            }
+        // for(let i of favoriteChars) {
+        //     if(i.classList.contains('li-clicked')) {
+        //         i.classList.toggle('li-clicked');
+        //     }
 
-        }
+        // }
+
+        updateSwapiCharList();
     }
 
     });
@@ -302,6 +309,54 @@ insertPlanet.addEventListener('keyup', (e) => {
 
 })
 
+//_____________Search button event_____________
+
+searchButton.addEventListener('click', () => {
+    let searchArea = document.querySelector('.search-area');
+    searchArea.classList.toggle('search-area-visible');
+});
+
+//______________Search input event on charracters name_________________
+
+let nameSearch = document.querySelector('.input-search');
+
+nameSearch.addEventListener('keyup', (e) => {
+
+    let charracters = document.querySelectorAll('.list-visible > ul li');
+    let charracterList = document.querySelector('.list-visible > ul');
+
+    console.log(charracters.length);
+
+    let searchArea = document.querySelector('.search-area');
+
+    if(e.keyCode === 13 && e.target.value && searchArea.classList.contains('search-area-visible')) {
+
+        for(let i = 0; i < charracters.length; i++) {
+
+            let stringName = charracters[i].innerText;
+
+            console.log(stringName);
+
+            let charName = stringName.split(', ');
+
+            console.log(charName);
+
+            console.log(e.target.value);
+    
+            if(!charName[0].toUpperCase().includes(e.target.value.toUpperCase())) {
+                charracterList.removeChild(charracters[i]);
+            }
+        }
+    }
+
+    else if(searchArea.classList.contains('search-area-visible')) {
+
+       updateSwapiCharList();
+    }
+
+    
+})
+
 
 function UpdateList() {
     let listOfCharracters = document.querySelector('.list-visible ul');
@@ -320,4 +375,23 @@ function UpdateList() {
             }
 
         }
+}
+
+function updateSwapiCharList() {
+    let listOfCharracters = document.querySelector('.list-visible ul');
+
+    while(listOfCharracters.hasChildNodes()) {
+        listOfCharracters.removeChild(listOfCharracters.lastChild);
+    }
+
+    for(let i of allChars) {
+        listOfCharracters.appendChild(i);
+    }
+
+    for(let i of favoriteChars) {
+        if(i.classList.contains('li-clicked')) {
+            i.classList.toggle('li-clicked');
+        }
+
+    }
 }

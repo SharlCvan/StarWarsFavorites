@@ -133,20 +133,6 @@ header {
     transition: 1000ms;
 }
 
-/*Section with the lists*/
-
-/* .intro-section {
-    min-height: 850px;
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 80px;
-   border-style: dashed;
-} */
-
 .intro-section {
     min-height: 850px;
     width: 100%;
@@ -154,6 +140,7 @@ header {
     z-index: 100;
     display: grid;
     grid-template-rows: 120px 600px 40px 40px;
+    row-gap: 10px;
 }
 
 .list-background {

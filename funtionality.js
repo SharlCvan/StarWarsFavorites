@@ -53,9 +53,14 @@
 
         console.log(charracter.homeworld);
 
+<<<<<<< HEAD
         const url = `${charracter.homeworld}`;
         url = url.replace('http', 'https');
         
+=======
+        let url = `${charracter.homeworld}`;
+        url = url.replace('http', 'https');
+>>>>>>> 766e63bb7c2a0764739ee87135afe25cb2e8efab
         const response = await fetch(url);
         const planetData = await response.json();
 

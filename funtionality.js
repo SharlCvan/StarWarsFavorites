@@ -321,17 +321,9 @@ nameSearch.addEventListener('keyup', (e) => {
 
         for(let i = 0; i < charracters.length; i++) {
 
-            let stringName = charracters[i].innerText;
-
-            console.log(stringName);
-
-            let charName = stringName.split(', ');
-
-            console.log(charName);
-
-            console.log(e.target.value);
+            let stringName = ` ${charracters[i].innerText}`;
     
-            if(!charName[0].toUpperCase().includes(e.target.value.toUpperCase())) {
+            if(!stringName.toUpperCase().includes(` ${e.target.value.toUpperCase()}`)) {
                 charracterList.removeChild(charracters[i]);
             }
         }

@@ -154,7 +154,7 @@
    addButton.addEventListener('click', () => {
 
        for(let i of allChars) {
-           if(i.classList.contains('li-clicked')) {
+           if(i.classList.contains('li-clicked') && charInList(i.innerText)) {
                let favChar = document.createElement('li');
                favChar.innerText = i.innerText;
 
@@ -168,6 +168,23 @@
        }
 
    })
+
+   function charInList(charString) {
+
+    console.log("Input text is: " + charString);
+
+    for(let i of favoriteChars) {
+
+        console.log(charString + " VS " + i.innerText);
+
+        if(i.innerText.toUpperCase() === charString.toUpperCase()) {
+            console.log('charracter is in list');
+            return false;
+        }
+    }
+    console.log('charracter is NOT in list');
+       return true;
+   }
 
    //_____________Remove Char from favorites event_________
 
@@ -263,18 +280,11 @@ let insertArea = document.querySelector('.input-area');
 
 insertPlanet.addEventListener('keyup', (e) => {
 
- console.log('key was pressed');
-
  let nameInsert = document.querySelector('.input-name');
-
- console.log(e.target.value);
- console.log(nameInsert.value);
 
  let insertArea = document.querySelector('.input-area');
 
- if(e.keyCode === 13 && e.target.value && nameInsert.value && insertArea.classList.contains('insert-area-visible')) {
-
-     console.log('enter was pressed');
+ if(e.keyCode === 13 && e.target.value && nameInsert.value && insertArea.classList.contains('insert-area-visible') && charInList(`${nameInsert.value}, ${e.target.value}`)) {
 
      let charracters = document.querySelectorAll('.list-visible > ul');
      

@@ -1,6 +1,7 @@
    //____________Load charracters on page load______
     window.addEventListener('load', () => 
     {
+        console.log('Gettin charracters from SWAPI...');
         fillChars();
         let view = document.querySelector('#backstory');
         view.scrollIntoView({behavior: "smooth"});
@@ -51,15 +52,11 @@
      async function charMaker(charracter) {
         let li = document.createElement('li');
 
-        console.log(charracter.homeworld);
-
         let url = `${charracter.homeworld}`;
         url = url.replace('http', 'https');
 
         const response = await fetch(url);
         const planetData = await response.json();
-
-        console.log(planetData.name);
 
         let char = {
             name: charracter.name,
@@ -73,6 +70,8 @@
     //______________Jedi icon click event_________________
 
     jediIcon[0].addEventListener('click', () => {
+
+        console.log('Getting FAVORITE charracters');
 
         charracterList.classList = 'list-visible';
         buttonPanel.classList = 'button-panel';
@@ -91,6 +90,8 @@
     //_________________Sith icon click event________________________
 
     jediIcon[1].addEventListener('click', async () => {
+
+        console.log('Getting ALL charracters');
 
         let sithText = document.querySelector('.nav-sith-text');
 
@@ -128,6 +129,8 @@
     let starWarsIcon = document.querySelector('a[href="#backstory"]');
 
     starWarsIcon.addEventListener('click', () => {
+
+        console.log('Displaying Star Wars intro text...');
         charracterList.classList = 'list';
         buttonPanel.classList = 'button-panel-hidden';
         let inputArea = document.querySelector('.input-area');
@@ -138,13 +141,15 @@
  
     function liClick (clickedLi) {
 
+        console.log('Element selected');
         let listLi = document.querySelectorAll('.list-visible > ul li');
     
         for(let j = 0; j < listLi.length; j++) {
             if(listLi[j].classList.contains('li-clicked')) {
                 listLi[j].classList.toggle('li-clicked');
             }
-        }      
+        }  
+
         clickedLi.classList.toggle('li-clicked');      
     }  
 
@@ -152,46 +157,45 @@
    //___add char to favorites event____
 
    addButton.addEventListener('click', () => {
+    console.log('Adding charracter...');
 
-       for(let i of allChars) {
-           if(i.classList.contains('li-clicked') && charInList(i.innerText)) {
-               let favChar = document.createElement('li');
-               favChar.innerText = i.innerText;
+    for(let i of allChars) {
 
-               favChar.addEventListener('click', (event) => {
-                liClick(event.target)
-                });
+        if(i.classList.contains('li-clicked') && charInList(i.innerText)) {
+
+            let favChar = document.createElement('li');
+            favChar.innerText = i.innerText;
+
+            favChar.addEventListener('click', (event) => {
+            liClick(event.target)
+            });
                
-               favoriteChars.push(favChar);
-               i.classList.toggle('li-clicked');
-           }
-       }
+            favoriteChars.push(favChar);
+            i.classList.toggle('li-clicked');
+        }
+    }
 
    })
 
    function charInList(charString) {
 
-    console.log("Input text is: " + charString);
-
     for(let i of favoriteChars) {
 
-        console.log(charString + " VS " + i.innerText);
-
         if(i.innerText.toUpperCase() === charString.toUpperCase()) {
-            console.log('charracter is in list');
+            console.log('charracter ALREADY in list');
             return false;
         }
     }
-    console.log('charracter is NOT in list');
-       return true;
+    console.log('charracter ADDED');
+    return true;
    }
 
    //_____________Remove Char from favorites event_________
 
    removeButton.addEventListener('click', () => {
+
     let inputArea = document.querySelector('.input-area');
     inputArea.classList.remove('input-area-visible');
-
     let insertArea = document.querySelector('.input-area');
     insertArea.classList.remove('insert-area-visible');
 
@@ -214,33 +218,24 @@
 
    //___________________Edit chars button event_______________________
    editButton.addEventListener('click', () => {
+
        let inputArea = document.querySelector('.input-area');
        inputArea.classList.toggle('input-area-visible');
-
        let insertArea = document.querySelector('.input-area');
        insertArea.classList.remove('insert-area-visible');
-       
    })
 
   //_____________________Edit chars input event_______________________
 
    let editName = document.querySelector('.input-name');
    let editPlanet = document.querySelector('.input-planet');
-
    let inputArea = document.querySelector('.input-area');
  
    editPlanet.addEventListener('keyup', (e) => {
 
-    console.log('key was pressed');
-
     let nameInput = document.querySelector('.input-name');
 
-    console.log(e.target.value);
-    console.log(nameInput.value);
-
     if(e.keyCode === 13 && e.target.value && nameInput.value && inputArea.classList.contains('input-area-visible')) {
-
-        console.log('enter was pressed');
 
         let charracters = document.querySelectorAll('.list-visible > ul li');
 
@@ -252,10 +247,6 @@
 
         editPlanet.value = '';
         editName.value = '';
-
-        let insertArea = document.querySelector('.input-area');
-        insertArea.classList.toggle('input-area-visible');
-
     }
 
    })
@@ -264,30 +255,26 @@
 //_______________Insert button event_____________________
 
 insetButton.addEventListener('click', () => {
+
     let insertArea = document.querySelector('.input-area');
     insertArea.classList.toggle('insert-area-visible');
-
     let inputArea = document.querySelector('.input-area');
     inputArea.classList.remove('input-area-visible');
 })
 
-//______________________Insert own charracter input event__________________
+//______________________Insert own charracter input event__________________Dubbelkolla så att den funkar
 
 let insertName = document.querySelector('.input-name');
 let insertPlanet = document.querySelector('.input-planet');
-
 let insertArea = document.querySelector('.input-area');
 
 insertPlanet.addEventListener('keyup', (e) => {
 
  let nameInsert = document.querySelector('.input-name');
+ let inputArea = document.querySelector('.input-area');
 
- let insertArea = document.querySelector('.input-area');
+ if(e.keyCode === 13 && e.target.value && nameInsert.value && inputArea.classList.contains('insert-area-visible') && charInList(`${nameInsert.value}, ${e.target.value}`)) {
 
- if(e.keyCode === 13 && e.target.value && nameInsert.value && insertArea.classList.contains('insert-area-visible') && charInList(`${nameInsert.value}, ${e.target.value}`)) {
-
-     let charracters = document.querySelectorAll('.list-visible > ul');
-     
      let insertChar = document.createElement('li');
      insertChar.innerText = `${nameInsert.value}, ${e.target.value}`;
 
@@ -295,14 +282,9 @@ insertPlanet.addEventListener('keyup', (e) => {
         liClick(event.target)
         });
 
-     favoriteChars.push(insertChar);
-
-    let insertArea = document.querySelector('.insert-area');
-    insertArea.classList.add('insert-area-visible');
-
+    favoriteChars.push(insertChar);
     insertName.value = '';
     insertPlanet.value = '';
-
  }
 
  UpdateList();
@@ -325,8 +307,6 @@ nameSearch.addEventListener('keyup', (e) => {
     let charracters = document.querySelectorAll('.list-visible > ul li');
     let charracterList = document.querySelector('.list-visible > ul');
 
-    console.log(charracters.length);
-
     let searchArea = document.querySelector('.search-area');
 
     if(e.keyCode === 13 && e.target.value && searchArea.classList.contains('search-area-visible')) {
@@ -339,6 +319,7 @@ nameSearch.addEventListener('keyup', (e) => {
                 charracterList.removeChild(charracters[i]);
             }
         }
+        nameSearch.value = '';
     }
 
     else if(searchArea.classList.contains('search-area-visible')) {
@@ -346,7 +327,6 @@ nameSearch.addEventListener('keyup', (e) => {
        updateSwapiCharList();
     }
 
-    
 })
 
 

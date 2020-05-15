@@ -399,4 +399,6 @@ function originalPlaceHolder() {
     let insertName = document.querySelector('.input-name');
     insertName.placeholder = 'Name';
     insertPlanet.placeholder = 'Planet';
+    insertName.value = '';
+    insertPlanet.value = '';
 }

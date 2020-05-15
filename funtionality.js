@@ -264,7 +264,7 @@
         editName.value = '';
         editPlanet.value = '';
         editName.placeholder = 'Pick charracter to edit';
-        editPlanet.placeholder  = 'Pick Charracter to edit';
+        editPlanet.placeholder  = 'Input text in both fields';
     }
 
    })
@@ -310,7 +310,7 @@ insertPlanet.addEventListener('keyup', (e) => {
     insertName.value = '';
     insertPlanet.value = '';
     insertName.placeholder = 'Already in list';
-    insertPlanet.placeholder = 'Already in list';
+    insertPlanet.placeholder = 'Or didnt input both fields';
  }
 
  UpdateList();

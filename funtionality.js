@@ -42,9 +42,12 @@
             });
             allChars.push(charracter);
         }
+
+        console.log(`Page: ${i} added`);
     }
     let sithText = document.querySelector('.nav-sith-text');
         sithText.innerHTML = "<h2>ALL CHARRACTERS</h2>";
+        console.log('All charracters loaded from SWAPI');
     }
 
      //_____function mapping planet to charracter_____
@@ -194,6 +197,9 @@
 
    removeButton.addEventListener('click', () => {
 
+    originalPlaceHolder();
+    insetButton.style.cssText += 'background-color: grey;';
+    editButton.style.cssText += 'background-color: grey;';
     let inputArea = document.querySelector('.input-area');
     inputArea.classList.remove('input-area-visible');
     let insertArea = document.querySelector('.input-area');
@@ -218,11 +224,14 @@
 
    //___________________Edit chars button event_______________________
    editButton.addEventListener('click', () => {
-
-       let inputArea = document.querySelector('.input-area');
-       inputArea.classList.toggle('input-area-visible');
-       let insertArea = document.querySelector('.input-area');
-       insertArea.classList.remove('insert-area-visible');
+       
+    originalPlaceHolder();
+    insetButton.style.cssText += 'background-color: grey;';
+    editButton.style.cssText += 'background-color: darkgrey;';
+    let inputArea = document.querySelector('.input-area');
+    inputArea.classList.toggle('input-area-visible');
+    let insertArea = document.querySelector('.input-area');
+    insertArea.classList.remove('insert-area-visible');
    })
 
   //_____________________Edit chars input event_______________________
@@ -233,20 +242,29 @@
  
    editPlanet.addEventListener('keyup', (e) => {
 
-    let nameInput = document.querySelector('.input-name');
+    let foundChar = false;
 
-    if(e.keyCode === 13 && e.target.value && nameInput.value && inputArea.classList.contains('input-area-visible')) {
+    if(e.keyCode === 13 && e.target.value && editName.value && inputArea.classList.contains('input-area-visible')) {
 
         let charracters = document.querySelectorAll('.list-visible > ul li');
 
         for(let i = 0; i < charracters.length; i++) {
             if(charracters[i].classList.contains('li-clicked')) {
-                favoriteChars[i].innerText = `${nameInput.value}, ${event.target.value}`;
+                favoriteChars[i].innerText = `${editName.value}, ${event.target.value}`;
+                foundChar = true;
             }
         }
-
-        editPlanet.value = '';
         editName.value = '';
+        editPlanet.value = '';
+        originalPlaceHolder();
+    }
+
+    if(e.keyCode === 13 && !foundChar && inputArea.classList.contains('input-area-visible')) {
+
+        editName.value = '';
+        editPlanet.value = '';
+        editName.placeholder = 'Pick charracter to edit';
+        editPlanet.placeholder  = 'Pick Charracter to edit';
     }
 
    })
@@ -256,6 +274,9 @@
 
 insetButton.addEventListener('click', () => {
 
+    originalPlaceHolder();
+    insetButton.style.cssText += 'background-color: darkgrey;';
+    editButton.style.cssText += 'background-color: grey;';
     let insertArea = document.querySelector('.input-area');
     insertArea.classList.toggle('insert-area-visible');
     let inputArea = document.querySelector('.input-area');
@@ -264,19 +285,17 @@ insetButton.addEventListener('click', () => {
 
 //______________________Insert own charracter input event__________________Dubbelkolla så att den funkar
 
-let insertName = document.querySelector('.input-name');
 let insertPlanet = document.querySelector('.input-planet');
-let insertArea = document.querySelector('.input-area');
 
 insertPlanet.addEventListener('keyup', (e) => {
 
- let nameInsert = document.querySelector('.input-name');
+ let insertName = document.querySelector('.input-name');
  let inputArea = document.querySelector('.input-area');
 
- if(e.keyCode === 13 && e.target.value && nameInsert.value && inputArea.classList.contains('insert-area-visible') && charInList(`${nameInsert.value}, ${e.target.value}`)) {
+ if(e.keyCode === 13 && e.target.value && insertName.value && inputArea.classList.contains('insert-area-visible') && charInList(`${insertName.value}, ${e.target.value}`)) {
 
      let insertChar = document.createElement('li');
-     insertChar.innerText = `${nameInsert.value}, ${e.target.value}`;
+     insertChar.innerText = `${insertName.value}, ${e.target.value}`;
 
      insertChar.addEventListener('click', (event) => {
         liClick(event.target)
@@ -285,6 +304,13 @@ insertPlanet.addEventListener('keyup', (e) => {
     favoriteChars.push(insertChar);
     insertName.value = '';
     insertPlanet.value = '';
+    originalPlaceHolder();
+ }
+ else if(e.keyCode === 13 && inputArea.classList.contains('insert-area-visible')) {
+    insertName.value = '';
+    insertPlanet.value = '';
+    insertName.placeholder = 'Already in list';
+    insertPlanet.placeholder = 'Already in list';
  }
 
  UpdateList();
@@ -366,4 +392,11 @@ function updateSwapiCharList() {
         }
 
     }
+}
+
+function originalPlaceHolder() {
+    let insertPlanet = document.querySelector('.input-planet');
+    let insertName = document.querySelector('.input-name');
+    insertName.placeholder = 'Name';
+    insertPlanet.placeholder = 'Planet';
 }
